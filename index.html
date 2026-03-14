@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shivani Kumari | AI Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05080f;
+      --surface: #0d1220;
+      --surface2: #141929;
+      --accent: #00e5c3;
+      --accent2: #7b6cff;
+      --accent3: #ff6b9d;
+      --text: #e8edf7;
+      --muted: #7a8499;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(0, 229, 195, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.3s, height 0.3s, border-color 0.3s;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,195,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,195,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient glows */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+    }
+    .glow-orb-1 { width: 600px; height: 600px; background: var(--accent2); top: -200px; right: -200px; }
+    .glow-orb-2 { width: 500px; height: 500px; background: var(--accent); bottom: 200px; left: -200px; }
+    .glow-orb-3 { width: 400px; height: 400px; background: var(--accent3); top: 60%; right: 10%; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 8, 15, 0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Sections */
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 60px 80px;
+      gap: 60px;
+    }
+    .hero-left { flex: 1; max-width: 680px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      padding: 6px 14px;
+      border: 1px solid rgba(0,229,195,0.25);
+      border-radius: 100px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .hero-name .line { display: block; overflow: hidden; }
+    .hero-name .line span {
+      display: inline-block;
+      animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .hero-name .line:nth-child(2) span { animation-delay: 0.1s; }
+    @keyframes slideUp {
+      from { transform: translateY(110%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .hero-title {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .hero-title strong { color: var(--text); font-weight: 500; }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 560px;
+      margin-bottom: 44px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px;
+      background: var(--accent);
+      color: #05080f;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(0,229,195,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,229,195,0.45); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .hero-right {
+      flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+    .hero-avatar-wrap {
+      position: relative;
+      width: 200px; height: 200px;
+    }
+    .hero-avatar-ring {
+      position: absolute; inset: -12px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero-avatar {
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--surface2), var(--surface));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      border: 3px solid var(--surface2);
+    }
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--accent); }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Scrolling ticker */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      background: var(--surface);
+    }
+    .ticker {
+      display: flex; gap: 60px; width: max-content;
+      animation: ticker 30s linear infinite;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-item {
+      display: flex; align-items: center; gap: 14px;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ticker-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* Section header */
+    .section-header {
+      margin-bottom: 56px;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .section-title em {
+      font-style: normal;
+      -webkit-text-stroke: 1px var(--accent2);
+      color: transparent;
+    }
+
+    /* Content sections common */
+    .content-section {
+      padding: 100px 60px;
+    }
+
+    /* ── ABOUT ── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 0.97rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .about-skills-wrap { display: flex; flex-direction: column; gap: 16px; }
+    .skill-row { display: flex; flex-direction: column; gap: 6px; }
+    .skill-top { display: flex; justify-content: space-between; font-size: 0.8rem; }
+    .skill-name { color: var(--text); font-weight: 500; }
+    .skill-pct { color: var(--muted); }
+    .skill-bar {
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .skill-fill.animate { transform: scaleX(1); }
+
+    /* ── RESEARCH / PROJECTS ── */
+    #research {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: none;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top left, rgba(0,229,195,0.06), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover { border-color: rgba(0,229,195,0.3); transform: translateY(-4px); }
+    .project-card:hover::before { opacity: 1; }
+    .project-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .tag-medical { background: rgba(0,229,195,0.1); color: var(--accent); }
+    .tag-vision { background: rgba(123,108,255,0.12); color: var(--accent2); }
+    .tag-iot { background: rgba(255,107,157,0.12); color: var(--accent3); }
+    .tag-ml { background: rgba(255,200,80,0.1); color: #ffc850; }
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .project-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .project-tech {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 18px;
+    }
+    .tech-badge {
+      font-size: 0.7rem;
+      padding: 3px 9px;
+      background: var(--surface2);
+      color: var(--muted);
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .project-num {
+      position: absolute; top: 24px; right: 24px;
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pub-list { display: flex; flex-direction: column; gap: 2px; }
+    .pub-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 24px;
+      align-items: start;
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 8px;
+    }
+    .pub-item:hover { border-color: rgba(123,108,255,0.4); background: var(--surface2); }
+    .pub-year {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      padding-top: 3px;
+      white-space: nowrap;
+    }
+    .pub-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .pub-venue {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .pub-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .badge-award { background: rgba(255,200,80,0.12); color: #ffc850; }
+    .badge-accepted { background: rgba(0,229,195,0.1); color: var(--accent); }
+    .badge-review { background: rgba(123,108,255,0.12); color: var(--accent2); }
+    .badge-ieee { background: rgba(255,107,157,0.12); color: var(--accent3); }
+
+    /* ── EXPERIENCE / TIMELINE ── */
+    #experience {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .timeline { position: relative; padding-left: 36px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 44px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -36px; top: 6px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 12px rgba(0,229,195,0.4);
+    }
+    .timeline-date {
+      font-size: 0.73rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .timeline-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .timeline-org {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .timeline-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .timeline-desc li {
+      margin-bottom: 4px;
+      padding-left: 14px;
+      position: relative;
+    }
+    .timeline-desc li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    /* ── AWARDS ── */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .award-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .award-card:hover { border-color: rgba(255,200,80,0.4); transform: translateY(-3px); }
+    .award-icon { font-size: 1.8rem; }
+    .award-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .award-body { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 100px 60px;
+      text-align: center;
+    }
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .contact-links {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 14px;
+      margin-top: 40px;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 26px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .contact-link svg { flex-shrink: 0; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 28px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      #hero { flex-direction: column; padding: 100px 24px 60px; text-align: center; }
+      .hero-ctas { justify-content: center; }
+      .hero-right { width: 100%; }
+      .about-grid { grid-template-columns: 1fr; }
+      .content-section { padding: 70px 24px; }
+      #contact { padding: 70px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="glow-orb glow-orb-3"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SK</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">PhD Researcher · YunTech, Taiwan</div>
+      <h1 class="hero-name">
+        <span class="line"><span>Shivani</span></span>
+        <span class="line"><span>Kumari</span></span>
+      </h1>
+      <p class="hero-title">
+        <strong>AI in Biomedical Imaging</strong> · Medical Signal Processing<br>
+        Non-Invasive Glucose Monitoring · Deep Learning for Healthcare
+      </p>
+      <p class="hero-desc">
+        PhD researcher working at the intersection of AI and clinical medicine — using OCTA, MRI, CT and ultrasound to build next-generation non-invasive diagnostics. Passionate about multimodal data fusion and real-world impact in healthcare.
+      </p>
+      <div class="hero-ctas">
+        <a href="mailto:shivanikumaribit1998@gmail.com" class="btn-primary">Get in Touch →</a>
+        <a href="https://scholar.google.com/citations?user=0HL3iw0AAAAJ" target="_blank" class="btn-secondary">Google Scholar ↗</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar-ring"></div>
+        <div class="hero-avatar">SK</div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-num">7+</div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Scholarships</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Years Research</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">🏆</div>
+          <div class="stat-label">IEEE Best Paper</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker">
+      <span class="ticker-item"><span class="ticker-dot"></span>OCTA Imaging</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Non-Invasive Glucose Monitoring</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>SwinUNet · U-Net</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Radiomics</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Federated Learning</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>PyTorch · TensorFlow</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Multimodal Fusion</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>IEEE SmartIoT 2024 Best Paper Runner-Up</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Photoacoustic Imaging</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Diabetic Retinopathy Detection</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot"></span>OCTA Imaging</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Non-Invasive Glucose Monitoring</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>SwinUNet · U-Net</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Radiomics</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Federated Learning</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>PyTorch · TensorFlow</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Multimodal Fusion</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>IEEE SmartIoT 2024 Best Paper Runner-Up</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Photoacoustic Imaging</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Diabetic Retinopathy Detection</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="content-section">
+    <div class="section-header reveal">
+      <div class="section-tag">01 · About</div>
+      <h2 class="section-title">Bridging AI with <em>Clinical Medicine</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a <strong>PhD researcher at National Yunlin University of Science and Technology (YunTech), Taiwan</strong>, specializing in AI-driven biomedical imaging for non-invasive diagnostics. My current research focuses on predicting blood glucose levels using ultrasound, OCTA, MRI, and CT — without a single needle.</p>
+        <p>My work is grounded in <strong>real clinical collaboration</strong> — partnering with Hualien Tzu Chi Hospital to collect and validate data that bridges the gap between machine learning research and patient care.</p>
+        <p>I hold a <strong>Master's in Computer Science from YunTech</strong> and a <strong>Bachelor of Technology from BIT Mesra, India</strong>, backed by two full scholarships (MOE Taiwan & TATA Steel India). I've also been recognized with the <strong>Best Paper Runner-Up at IEEE SmartIoT 2024</strong> in Shenzhen, China.</p>
+      </div>
+      <div class="about-skills-wrap reveal">
+        <div class="skill-row">
+          <div class="skill-top"><span class="skill-name">Deep Learning & Computer Vision</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span class="skill-name">Medical Image Analysis (OCTA, MRI, CT)</span><span class="skill-pct">92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span class="skill-name">Python · PyTorch · TensorFlow</span><span class="skill-pct">93%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:93%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span class="skill-name">Signal Processing & Radiomics</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span class="skill-name">Federated Learning</span><span class="skill-pct">82%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span class="skill-name">Scientific Writing & Research</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH / PROJECTS -->
+  <section id="research" class="content-section">
+    <div class="section-header reveal">
+      <div class="section-tag">02 · Research & Projects</div>
+      <h2 class="section-title">What I'm <em>Building</em></h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <div class="project-tag tag-medical">Active Research</div>
+        <div class="project-title">Non-Invasive Blood Glucose Monitoring via Ultrasound & AI</div>
+        <div class="project-desc">Real-time AI models using OCTA, ultrasound, and CT for glucose prediction in collaboration with Hualien Tzu Chi Hospital. Integrates IoT system design with clinical validation.</div>
+        <div class="project-tech">
+          <span class="tech-badge">MATLAB</span><span class="tech-badge">PyTorch</span><span class="tech-badge">IoT</span><span class="tech-badge">U-Net</span><span class="tech-badge">SwinUNet</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">02</div>
+        <div class="project-tag tag-vision">Computer Vision</div>
+        <div class="project-title">OCTA-Based Glucose Prediction with LLM Report Generation</div>
+        <div class="project-desc">CNN-GRU-Transformer architecture for vascular feature extraction from OCTA images, with LLM-based automated clinical report generation. A multimodal fusion framework.</div>
+        <div class="project-tech">
+          <span class="tech-badge">Transformers</span><span class="tech-badge">CNN-GRU</span><span class="tech-badge">LLM</span><span class="tech-badge">OCTA</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">03</div>
+        <div class="project-tag tag-medical">Medical AI</div>
+        <div class="project-title">Pancreas MRI Diabetes Risk Stratification</div>
+        <div class="project-desc">Radiomics and shape clustering (GMM, HDBSCAN, VAE) from MRI images with nnUNetV2 segmentation for early-stage diabetes risk profiling.</div>
+        <div class="project-tech">
+          <span class="tech-badge">nnUNetV2</span><span class="tech-badge">Radiomics</span><span class="tech-badge">GMM</span><span class="tech-badge">VAE</span><span class="tech-badge">MRI</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">04</div>
+        <div class="project-tag tag-medical">IEEE Published</div>
+        <div class="project-title">Photoacoustic Glucose Monitoring Device (PAGMD)</div>
+        <div class="project-desc">Simulation-driven design combining ultrasound and NIR signal processing for real-time non-invasive glucose detection with IoT integration and hybrid energy harvesting.</div>
+        <div class="project-tech">
+          <span class="tech-badge">Photoacoustic</span><span class="tech-badge">IoT</span><span class="tech-badge">NIR</span><span class="tech-badge">IEEE</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">05</div>
+        <div class="project-tag tag-vision">Deep Learning</div>
+        <div class="project-title">Diabetic Retinopathy Detection from Fundus Images</div>
+        <div class="project-desc">Multi-scale vessel and lesion feature fusion for early DR detection using fundus images. Published at SPIE IWAIT 2026, Kaohsiung.</div>
+        <div class="project-tech">
+          <span class="tech-badge">PyTorch</span><span class="tech-badge">SPIE</span><span class="tech-badge">Fundus</span><span class="tech-badge">Multi-Scale</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-num">06</div>
+        <div class="project-tag tag-ml">Award Winner</div>
+        <div class="project-title">UAV + Tiny-YOLOv9 Paddy Rice Disease Detection</div>
+        <div class="project-desc">Deep learning pipeline for real-time agricultural disease detection using drone imagery. Awarded Best Paper Runner-Up at IEEE SmartIoT 2024, Shenzhen.</div>
+        <div class="project-tech">
+          <span class="tech-badge">YOLOv9</span><span class="tech-badge">UAV</span><span class="tech-badge">OpenCV</span><span class="tech-badge">IEEE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications" class="content-section">
+    <div class="section-header reveal">
+      <div class="section-tag">03 · Publications</div>
+      <h2 class="section-title">Peer-Reviewed <em>Work</em></h2>
+    </div>
+    <div class="pub-list">
+      <div class="pub-item reveal">
+        <div class="pub-year">2025</div>
+        <div>
+          <div class="pub-title">Simulation-Driven Design of a Non-Invasive Photoacoustic Glucose Monitoring Device With IoT Integration and Hybrid Energy Harvesting</div>
+          <div class="pub-venue">IEEE Internet of Things Magazine · DOI: 10.1109/MIOT.2025.3639278</div>
+        </div>
+        <span class="pub-badge badge-ieee">IEEE</span>
+      </div>
+      <div class="pub-item reveal">
+        <div class="pub-year">2026</div>
+        <div>
+          <div class="pub-title">Multi-scale vessel and lesion feature fusion for early diabetic retinopathy detection using fundus images</div>
+          <div class="pub-venue">SPIE Proceedings · IWAIT 2026, Kaohsiung, Taiwan · DOI: 10.1117/12.3109894</div>
+        </div>
+        <span class="pub-badge badge-accepted">SPIE</span>
+      </div>
+      <div class="pub-item reveal">
+        <div class="pub-year">2025</div>
+        <div>
+          <div class="pub-title">Non-Invasive Glucose Monitoring Using Ultrasound and AI: A Comprehensive Review</div>
+          <div class="pub-venue">Journal of Innovative Technology (JIT) · Accepted 2025</div>
+        </div>
+        <span class="pub-badge badge-accepted">Accepted</span>
+      </div>
+      <div class="pub-item reveal">
+        <div class="pub-year">2024</div>
+        <div>
+          <div class="pub-title">UAV-Based Deep Learning with Tiny-YOLOv9 for Revolutionizing Paddy Rice Disease Detection</div>
+          <div class="pub-venue">IEEE SmartIoT 2024 · Shenzhen, China</div>
+        </div>
+        <span class="pub-badge badge-award">🏆 Best Paper Runner-Up</span>
+      </div>
+      <div class="pub-item reveal">
+        <div class="pub-year">2025</div>
+        <div>
+          <div class="pub-title">Blood Glucose Alarm System using K-Nearest Neighbors</div>
+          <div class="pub-venue">IWAIT 2025 · Yunlin, Taiwan</div>
+        </div>
+        <span class="pub-badge badge-accepted">Conference</span>
+      </div>
+      <div class="pub-item reveal">
+        <div class="pub-year">2022–23</div>
+        <div>
+          <div class="pub-title">ECG Biometric Authentication (ML) · Biometric Key Scheme Based on PPG Signal</div>
+          <div class="pub-venue">NCWIA 2022 & NCWIA 2023</div>
+        </div>
+        <span class="pub-badge badge-review">Conference</span>
+      </div>
+      <div class="pub-item reveal" style="border-style: dashed;">
+        <div class="pub-year" style="color: var(--muted);">TBD</div>
+        <div>
+          <div class="pub-title" style="color: var(--muted);">3 manuscripts under review / in preparation — including LLM-Enhanced OCTA Monitoring, Molecular AI Pancreas, and Tabular Foundation Models for Glucose</div>
+          <div class="pub-venue">Targeting top journals</div>
+        </div>
+        <span class="pub-badge badge-review">In Prep</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="content-section">
+    <div class="section-header reveal">
+      <div class="section-tag">04 · Experience</div>
+      <h2 class="section-title">Where I've <em>Worked</em></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Feb 2024 – Present</div>
+        <div class="timeline-role">Research Assistant</div>
+        <div class="timeline-org">National Yunlin University of Science and Technology, Taiwan</div>
+        <ul class="timeline-desc">
+          <li>Developing real-time AI models for blood glucose prediction using OCTA, ultrasound, and CT</li>
+          <li>Working with SwinUNet, U-Net, radiomics, and statistical modeling pipelines</li>
+          <li>Clinical data collection and integration with Hualien Tzu Chi Hospital</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jul 2025 – Aug 2025</div>
+        <div class="timeline-role">Research Intern</div>
+        <div class="timeline-org">National Dong Hwa University (NDHU), Hualien, Taiwan</div>
+        <ul class="timeline-desc">
+          <li>Student Laboratory Exchange — National University System of Taiwan</li>
+          <li>AI-driven biomedical research under Assoc. Prof. Wei-Che Chien</li>
+          <li>Focus on non-invasive healthcare technologies</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Aug 2023 – Dec 2023</div>
+        <div class="timeline-role">Software Developer</div>
+        <div class="timeline-org">Cefinity: Hannlync Inc., Hsinchu, Taiwan</div>
+        <ul class="timeline-desc">
+          <li>Full-stack development, data analysis, and API design</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jun 2020 – Aug 2020</div>
+        <div class="timeline-role">Data Science Intern</div>
+        <div class="timeline-org">TATA Steel Limited, Jamshedpur, India</div>
+        <ul class="timeline-desc">
+          <li>Active Time Prediction Model using Regression and Neural Networks</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">May 2019 – Jun 2019</div>
+        <div class="timeline-role">Embedded Systems Intern</div>
+        <div class="timeline-org">GIMER Medical (Neurostimulation), Taipei, Taiwan</div>
+        <ul class="timeline-desc">
+          <li>ARM embedded system development for TENS neurostimulation application</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section id="awards" class="content-section" style="background: var(--surface); border-top: 1px solid var(--border);">
+    <div class="section-header reveal">
+      <div class="section-tag">05 · Recognition</div>
+      <h2 class="section-title">Awards & <em>Honors</em></h2>
+    </div>
+    <div class="awards-grid">
+      <div class="award-card reveal">
+        <div class="award-icon">🏆</div>
+        <div class="award-title">Best Paper Runner-Up — IEEE SmartIoT 2024</div>
+        <div class="award-body">Shenzhen, China. UAV-Based Deep Learning with Tiny-YOLOv9 for Paddy Rice Disease Detection.</div>
+      </div>
+      <div class="award-card reveal">
+        <div class="award-icon">🎓</div>
+        <div class="award-title">MOE Scholarship — Taiwan</div>
+        <div class="award-body">Full scholarship awarded by Taiwan's Ministry of Education for Master's program at YunTech.</div>
+      </div>
+      <div class="award-card reveal">
+        <div class="award-icon">🎓</div>
+        <div class="award-title">TATA Steel Scholar — India</div>
+        <div class="award-body">Full scholarship for Bachelor of Technology at Birla Institute of Technology, Mesra.</div>
+      </div>
+      <div class="award-card reveal">
+        <div class="award-icon">🥇</div>
+        <div class="award-title">1st Prize — VinBigData Chest X-ray Detection</div>
+        <div class="award-body">Automated chest radiograph abnormality detection using TensorFlow & OpenCV.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <div class="section-tag" style="display:inline-block; margin-bottom: 12px;">06 · Contact</div>
+      <h2 class="section-title">Let's <em>Connect</em></h2>
+      <p style="margin-top: 18px; font-size: 0.95rem; color: var(--muted); line-height: 1.8;">
+        I'm always open to research collaborations, speaking opportunities, or just a great conversation about AI and healthcare. Feel free to reach out!
+      </p>
+      <div class="contact-links">
+        <a href="mailto:shivanikumaribit1998@gmail.com" class="contact-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Email Me
+        </a>
+        <a href="https://www.linkedin.com/in/shivani-kumari-0ab2931b0" target="_blank" class="contact-link">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://scholar.google.com/citations?user=0HL3iw0AAAAJ" target="_blank" class="contact-link">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 15.036 15 13 12 13s-5.548 2.036-6.758 4.769z"/><path d="M12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+          Google Scholar
+        </a>
+        <a href="https://github.com/shiv03-tan" target="_blank" class="contact-link">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Shivani Kumari · PhD Researcher, YunTech Taiwan · Built with precision & ❤️</p>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '18px'; cursor.style.height = '18px';
+        ring.style.width = '52px'; ring.style.height = '52px';
+        ring.style.borderColor = 'rgba(123,108,255,0.6)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '10px'; cursor.style.height = '10px';
+        ring.style.width = '36px'; ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(0,229,195,0.4)';
+      });
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Skill bar animation
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-fill').forEach((bar, i) => {
+            setTimeout(() => bar.classList.add('animate'), i * 100);
+          });
+          skillObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.about-skills-wrap').forEach(el => skillObserver.observe(el));
+  </script>
+</body>
+</html>
